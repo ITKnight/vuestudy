@@ -29,12 +29,13 @@
                         <li v-for="(article , index) in articles" class="list-group-item"
                             v-bind:class="{active:currentIndex==index}"
                             @click="currentIndex=index"
+                            v-text="article.title"
                         >测试 </li>
                     </ul>
                 </div>
                 <div class="col-xs-9">
                     <h2 v-text="articles[currentIndex].title"></h2>
-                    <script id="editor" type="text/plain" style="width:100%;height:300px;"></script>
+                    <script id="editor" type="text/plain" style="width:100%;height:300px;">{{articles[currentIndex].content}}</script>
                 </div>
             </div>
         </div>
