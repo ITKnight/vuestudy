@@ -1,0 +1,178 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <title>VUE  试验案例</title>
+    <style>
+        .margin-bottom {margin-bottom: 5px;}
+        .list-group-item{cursor: pointer}
+        .list-group-item:hover{background:#f2f2f2;}
+
+    </style>
+</head>
+<body>
+<div class="container" id="container">
+    <div class="row">
+        <div class="col-xs6 col-xs-offset-3">
+            <div class="panel panel-success">
+                <div class="panel-heading">
+                    VUE V-FOR 试验案例
+                </div>
+                <div class="panel-body">
+                    <div id="todo-list-example">
+                        <input class="form-control"
+                               v-bind:class="testcalss"
+                               v-model="menu.button[currentIndex].name"
+                               v-if="menu.button.length >0"
+                               v-on:keyup.enter="addNewTodo"
+                               placeholder="选择项目进行编辑"
+                        >
+                        <ul class="list-group  text-center">
+
+                            <template v-for="(button, index) in menu.button">
+                                <li
+                                        class="list-group-item"
+
+                                        @click="doThis(index,$event)"
+                                        v-bind:class="{active:button.clicked}"
+                                        v-bind:data-index="index"
+                                        v-text="button.name"
+                                        v-if="index >0"
+                                ></li>
+                                <li
+                                        class="list-group-item"
+
+                                        @click="doThis(index,$event)"
+                                        v-bind:class="{active:button.clicked}"
+                                        v-bind:data-index="index"
+
+                                        v-if="index ==0"
+                                >来呀，造作呀，反正有大把时光</li>
+                            </template>
+
+
+
+                            <li v-if="menu.button.length <3" class="list-group-item text-success" @click="addItem">点我添加新的菜单</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-offset-3 col-xs-6">
+
+            <button class="btn btn-select" @click="showItem">点击显示当前所有数据
+            <button class="btn btn-select" @click="clearItem">删除当前节点
+
+            </button>
+
+        </div>
+    </div>
+</div>
+
+<script src="js/vue.js"></script>
+<script>
+
+    Vue.component("father-menu",{
+        template:'' +
+        '<li>{{title}}</li>',
+        props:['title']
+    });
+    new Vue({
+        el: '#container',
+
+
+        data: {
+            currentIndex:0,
+            testcalss:'margin-bottom',
+            newTodoText: '',
+
+            menu :{
+                button:[
+                    {
+                        name:"左边父亲菜单",
+                        type:"",
+                        sub_button:[
+                            {
+                                name:"左边CLICK子菜单1",
+                                type:"click",
+                                key:"news_id_0048"
+                            },
+                            {
+                                name:"左边CLICK子菜单2",
+                                type:"click",
+                                key:"news_id_0048"
+                            },
+                            {
+                                name:"左边VIEW子菜单",
+                                type:"view",
+                                url:"http://www.bai.com"
+                            }
+                        ]
+                    },
+                    {
+                        name:"中间VIEW菜单",
+                        type:"view",
+                        url:"http://www.bai.com"
+                    },
+                    {
+                        name:"右边CLICK菜单",
+                        type:"click",
+                        key:"news_id_0048"
+                    }
+                ]
+            }
+        },
+        methods: {
+            addNewTodo: function () {
+                this.todos.push(this.newTodoText);
+                this.newTodoText = ''
+            },
+            doThis:function(idx,event){
+                var _index =event.target.getAttribute("data-index");
+                this.currentIndex=_index;
+                this.changeIndex(_index);
+                console.log(_index)
+
+            },
+            clearItem:function(){
+
+
+                this.menu.button.splice(this.currentIndex,1)
+                this.currentIndex=0;
+                this.changeIndex(this.currentIndex);
+            },
+            addItem:function(){
+                if(this.menu.button.length >=3){return;}
+                var o={
+                    name:"菜单名称",
+                    type:"click",
+                    key:"news_id_0048",
+                    clicked:false
+                };
+                this.menu.button.push(o);
+
+            },
+            showItem:function(){
+                console.log(this.menu.button[0].name);
+            },
+            changeIndex:function(currentIndex){
+                for(var i = 0 ;i <this.menu.button.length;i++){
+                    if(i!=currentIndex){
+                        this.menu.button[i].clicked =false;
+                    }else{
+                        this.menu.button[currentIndex].clicked =true;
+                    }
+                }
+
+            }
+        }
+    })
+</script>
+</body>
+</html>

@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>VUE VS UEditor</title>
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <style>
+        .container{
+            padding-top:100px;
+        }
+
+    </style>
+
+</head>
+<body>
+
+<div class="container" id="container">
+    <div class="row">
+        <div class="panel panel-success">
+
+            <div class="panel-heading">
+                <h4 class="panel-title">VUE 结合 Ueditor 双向绑定案例</h4>
+            </div>
+            <div class="panel-body">
+                <div class="col-xs-3">
+                    <ul class="list-group">
+                        <li v-for="(article , index) in articles" class="list-group-item"
+                            v-bind:class="{active:currentIndex==index}"
+                            @click="currentIndex=index"
+                        >测试 </li>
+                    </ul>
+                </div>
+                <div class="col-xs-9">
+                    <h2 v-text="articles[currentIndex].title"></h2>
+                    <script id="editor" type="text/plain" style="width:100%;height:300px;"></script>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript" charset="utf-8" src="ueditor/ueditor.config.js"></script>
+<script type="text/javascript" charset="utf-8" src="ueditor/ueditor.all.min.js"> </script>
+<!--建议手动加在语言，避免在ie下有时因为加载语言失败导致编辑器加载失败-->
+<!--这里加载的语言文件会覆盖你在配置项目里添加的语言类型，比如你在配置项目里配置的是英文，这里加载的中文，那最后就是中文-->
+<script type="text/javascript" charset="utf-8" src="ueditor/lang/zh-cn/zh-cn.js"></script>
+<script src="js/vue.js"></script>
+<script>
+    var ue = UE.getEditor('editor');
+    var vm = new Vue({
+    el:"#container",
+    data:{
+        currentIndex:0,
+        articles:[
+            {
+                title:"池上怀王卿",
+                content:"幽居捐世事，佳雨散园芳。<br>入门霭已绿，水禽鸣春塘。<br>重云始成夕，忽霁尚残阳。<br>轻舟因风泛，郡阁望苍苍。<br>私燕阻外好，临欢一停觞。<br>兹游无时尽，旭日愿相将。"
+            },{
+                title:"赠冯著",
+                content:"契阔仕两京，念子亦飘蓬。方来属追往，十载事不同。<br>　　岁晏乃云至，微褐还未充。惨凄游子情，风雪自关东。<br>　　华觞发欢颜，嘉藻播清风。始此盈抱恨，旷然一夕中。<br>　　善蕴岂轻售，怀才希国工。谁当念素士，零落岁华空。"
+            }
+        ]
+
+    }
+
+
+});
+
+</script>
+</body>
+</html>
