@@ -6,7 +6,9 @@ index.html:主要实现了双向绑定【目标已经达成】
 
 ##目前遇到的问题
 希望实现 VUE中Ueditor的数据绑定 【正在进行的难点】
-
+##解决方案1
+  watch currentIndex 当他改变时候，将对应article的内容放进editor
+  listen editor的contentChange事件，对应塞数据给article 
 
 #vuestudy
 
